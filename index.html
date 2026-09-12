@@ -97,21 +97,6 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-brand-primary selection:text-black">
 
-    <!-- Top Live Ticker -->
-    <div class="bg-gradient-to-r from-blue-900 via-purple-900 to-cyan-900 text-white text-xs py-2 px-4 overflow-hidden border-b border-dark-border">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span class="font-bold tracking-wider uppercase text-[10px] text-cyan-300">Live Orders:</span>
-                <span id="live-order-ticker" class="text-slate-200">User 0813*** credited 880 CP (CODM) • 1 min ago</span>
-            </div>
-            <div class="hidden md:flex items-center space-x-4 text-[11px] text-slate-300">
-                <span><i class="fas fa-bolt text-amber-400 mr-1"></i> Instant Delivery</span>
-                <span><i class="fas fa-lock text-emerald-400 mr-1"></i> SSL Encrypted</span>
-            </div>
-        </div>
-    </div>
-
     <!-- Header / Navbar -->
     <header class="sticky top-0 z-40 bg-dark-card/90 dark:bg-dark-card/90 bg-white/90 backdrop-blur-md border-b border-dark-border dark:border-dark-border border-light-border transition-colors">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
@@ -199,21 +184,21 @@
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <!-- CODM -->
                         <div id="game-codm" onclick="selectGame('codm')" class="glass-card rounded-2xl border border-dark-border dark:border-dark-border border-light-border cursor-pointer hover:border-cyan-500 transition-all overflow-hidden group">
-                            <div class="h-32 bg-cover bg-center relative" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop');">
-                                <div class="absolute inset-0 bg-gradient-to-t from-dark-card via-transparent to-black/30"></div>
-                                <span class="absolute top-2 right-2 bg-amber-500 text-black font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase">CP Points</span>
+                            <div class="h-36 bg-cover bg-center relative" style="background-image: url('https://m.media-amazon.com/images/M/MV5BNzI5M2FiNmItYTY1Mi00ZTI1LWE0NTItZGI3OWI3N2M3N2E0XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg');">
+                                <div class="absolute inset-0 bg-gradient-to-t from-dark-card via-black/20 to-transparent"></div>
+                                <span class="absolute top-2 right-2 bg-amber-500 text-black font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase shadow">CP Points</span>
                             </div>
                             <div class="p-4 text-center">
                                 <h3 class="font-extrabold text-base">Call of Duty: Mobile</h3>
-                                <p class="text-xs text-sub mt-0.5">Instant COD Points Crediting</p>
+                                <p class="text-xs text-sub mt-0.5">Instant COD Points</p>
                             </div>
                         </div>
 
                         <!-- Free Fire -->
                         <div id="game-ff" onclick="selectGame('ff')" class="glass-card rounded-2xl border border-dark-border dark:border-dark-border border-light-border cursor-pointer hover:border-cyan-500 transition-all overflow-hidden group">
-                            <div class="h-32 bg-cover bg-center relative" style="background-image: url('https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600&auto=format&fit=crop');">
-                                <div class="absolute inset-0 bg-gradient-to-t from-dark-card via-transparent to-black/30"></div>
-                                <span class="absolute top-2 right-2 bg-orange-500 text-white font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase">Diamonds</span>
+                            <div class="h-36 bg-cover bg-center relative" style="background-image: url('https://m.media-amazon.com/images/M/MV5BMjA3NTU1Njg4MF5BMl5BanBnXkFtZTgwNTI4ODA2NDM@._V1_.jpg');">
+                                <div class="absolute inset-0 bg-gradient-to-t from-dark-card via-black/20 to-transparent"></div>
+                                <span class="absolute top-2 right-2 bg-orange-500 text-white font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase shadow">Diamonds</span>
                             </div>
                             <div class="p-4 text-center">
                                 <h3 class="font-extrabold text-base">Free Fire</h3>
@@ -223,48 +208,28 @@
 
                         <!-- eFootball -->
                         <div id="game-efootball" onclick="selectGame('efootball')" class="glass-card rounded-2xl border border-dark-border dark:border-dark-border border-light-border cursor-pointer hover:border-cyan-500 transition-all overflow-hidden group">
-                            <div class="h-32 bg-cover bg-center relative" style="background-image: url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=600&auto=format&fit=crop');">
-                                <div class="absolute inset-0 bg-gradient-to-t from-dark-card via-transparent to-black/30"></div>
-                                <span class="absolute top-2 right-2 bg-emerald-500 text-black font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase">Coins</span>
+                            <div class="h-36 bg-cover bg-center relative" style="background-image: url('https://upload.wikimedia.org/wikipedia/en/2/21/EFootball_2024_cover.jpg');">
+                                <div class="absolute inset-0 bg-gradient-to-t from-dark-card via-black/20 to-transparent"></div>
+                                <span class="absolute top-2 right-2 bg-emerald-500 text-black font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase shadow">Coins</span>
                             </div>
                             <div class="p-4 text-center">
                                 <h3 class="font-extrabold text-base">eFootball 2026</h3>
-                                <p class="text-xs text-sub mt-0.5">eFootball Coins Refill</p>
+                                <p class="text-xs text-sub mt-0.5">eFootball Coins</p>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- Step 2: Player ID & Verification -->
+                <!-- Step 2: Player ID -->
                 <section class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-500 dark:text-cyan-400 font-bold flex items-center justify-center text-xs">2</div>
-                            <h2 class="text-xl font-bold tracking-wide">Player Account Details</h2>
-                        </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-500 dark:text-cyan-400 font-bold flex items-center justify-center text-xs">2</div>
+                        <h2 class="text-xl font-bold tracking-wide">Player Account Details</h2>
                     </div>
 
-                    <div class="glass-card p-5 rounded-2xl border border-dark-border dark:border-dark-border border-light-border space-y-3">
+                    <div class="glass-card p-5 rounded-2xl border border-dark-border dark:border-dark-border border-light-border space-y-2">
                         <label class="block text-xs font-bold uppercase text-sub tracking-wider">Player ID / Account UID</label>
-                        <div class="flex flex-col sm:flex-row gap-3">
-                            <input type="text" id="player-id" oninput="resetVerification(); updateSummary();" placeholder="Enter your Player ID (e.g., 6712398401)" class="w-full input-field rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-500 border font-mono text-sm">
-                            <button onclick="verifyUID()" class="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-5 py-3 rounded-xl transition whitespace-nowrap text-sm flex items-center justify-center space-x-2">
-                                <i class="fas fa-search"></i>
-                                <span>Verify UID</span>
-                            </button>
-                        </div>
-
-                        <!-- Verification Result Container -->
-                        <div id="uid-status" class="hidden p-3 rounded-xl border text-xs flex items-center justify-between">
-                            <div class="flex items-center space-x-2">
-                                <i id="uid-icon" class="fas fa-check-circle text-emerald-400 text-base"></i>
-                                <div>
-                                    <span id="uid-name" class="font-bold text-white block">Gamer Tag Verified</span>
-                                    <span id="uid-msg" class="text-slate-400 text-[11px]">User ID exists on game servers</span>
-                                </div>
-                            </div>
-                            <span id="uid-badge" class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold uppercase">VERIFIED</span>
-                        </div>
+                        <input type="text" id="player-id" oninput="updateSummary()" placeholder="Enter your Player ID (e.g., 6712398401)" class="w-full input-field rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-500 border font-mono text-sm">
                     </div>
                 </section>
 
@@ -380,7 +345,6 @@
         const phone = "2349053934805";
         let currentGame = "";
         let selectedPkg = null;
-        let isUIDVerified = false;
 
         const packages = {
             codm: [
@@ -447,50 +411,6 @@
             document.querySelectorAll('[id^="pkg-"]').forEach(el => el.classList.remove('pkg-card-active'));
             document.getElementById(`pkg-${idx}`).classList.add('pkg-card-active');
             updateSummary();
-        }
-
-        // Live UID Verification
-        function verifyUID() {
-            const pid = document.getElementById('player-id').value.trim();
-            const statusBox = document.getElementById('uid-status');
-            const uidName = document.getElementById('uid-name');
-            const uidMsg = document.getElementById('uid-msg');
-            const uidBadge = document.getElementById('uid-badge');
-            const uidIcon = document.getElementById('uid-icon');
-
-            if (!currentGame) {
-                alert("Please select a game first before verifying Player ID!");
-                return;
-            }
-
-            if (pid.length < 5) {
-                alert("Please enter a valid Player ID (at least 5 characters).");
-                return;
-            }
-
-            statusBox.classList.remove('hidden');
-            statusBox.className = "p-3 rounded-xl border text-xs flex items-center justify-between bg-cyan-500/10 border-cyan-500/30 text-cyan-400";
-            uidIcon.className = "fas fa-spinner fa-spin text-cyan-400 text-base";
-            uidName.innerText = "Connecting to server...";
-            uidMsg.innerText = "Checking game servers...";
-            uidBadge.innerText = "VERIFYING";
-
-            setTimeout(() => {
-                const names = ["J4X_ProGamer", "Viper_NG", "ShadowRider", "Ghost_Naija", "ApexPredator"];
-                const randomTag = names[Math.floor(Math.random() * names.length)] + "#" + Math.floor(1000 + Math.random() * 9000);
-                
-                statusBox.className = "p-3 rounded-xl border text-xs flex items-center justify-between bg-emerald-500/10 border-emerald-500/30 text-emerald-400";
-                uidIcon.className = "fas fa-check-circle text-emerald-400 text-base";
-                uidName.innerText = randomTag;
-                uidMsg.innerText = `Verified ${currentGame.toUpperCase()} Player ID: ${pid}`;
-                uidBadge.innerText = "VERIFIED";
-                isUIDVerified = true;
-            }, 1200);
-        }
-
-        function resetVerification() {
-            isUIDVerified = false;
-            document.getElementById('uid-status').classList.add('hidden');
         }
 
         // Order Summary Update
