@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J4X SHOPS | Game Top Up</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex flex-col font-sans">
+    <!-- Header -->
+    <header class="bg-slate-800 border-b border-slate-700 py-4 px-6 flex justify-between items-center sticky top-0 z-50">
+        <div class="flex items-center space-x-2">
+            <span class="text-2xl font-extrabold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-600">J4X SHOPS</span>
+        </div>
+        <a href="https://wa.me/2349053934805" target="_blank" class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center space-x-2 transition">
+            <i class="fab fa-whatsapp"></i>
+            <span>Support</span>
+        </a>
+    </header>
+
+    <!-- Hero -->
+    <main class="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6 space-y-8">
+        <section class="text-center py-6">
+            <h1 class="text-3xl md:text-5xl font-extrabold text-slate-100 mb-2">Instant In-Game Currency Top Up</h1>
+            <p class="text-slate-400">Select your game, pick a package, and pay directly.</p>
+        </section>
+
+        <!-- Step 1: Game Selection -->
+        <section class="space-y-4">
+            <h2 class="text-lg font-bold text-cyan-400 uppercase tracking-wide flex items-center space-x-2">
+                <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-xs flex items-center justify-center">1</span>
+                <span>Select Game</span>
+            </h2>
+            <div class="grid grid-cols-3 gap-3 md:gap-4">
+                <button onclick="selectGame('codm')" id="btn-codm" class="game-btn bg-slate-800 border-2 border-slate-700 hover:border-cyan-500 p-4 rounded-xl flex flex-col items-center justify-center transition group">
+                    <i class="fas fa-crosshairs text-3xl mb-2 text-cyan-400 group-hover:scale-110 transition"></i>
+                    <span class="font-bold text-sm md:text-base">CODM</span>
+                </button>
+                <button onclick="selectGame('ff')" id="btn-ff" class="game-btn bg-slate-800 border-2 border-slate-700 hover:border-orange-500 p-4 rounded-xl flex flex-col items-center justify-center transition group">
+                    <i class="fas fa-fire text-3xl mb-2 text-orange-400 group-hover:scale-110 transition"></i>
+                    <span class="font-bold text-sm md:text-base">Free Fire</span>
+                </button>
+                <button onclick="selectGame('efootball')" id="btn-efootball" class="game-btn bg-slate-800 border-2 border-slate-700 hover:border-blue-500 p-4 rounded-xl flex flex-col items-center justify-center transition group">
+                    <i class="fas fa-football-ball text-3xl mb-2 text-blue-400 group-hover:scale-110 transition"></i>
+                    <span class="font-bold text-sm md:text-base">eFootball</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Step 2: Player ID -->
+        <section class="space-y-4">
+            <h2 class="text-lg font-bold text-cyan-400 uppercase tracking-wide flex items-center space-x-2">
+                <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-xs flex items-center justify-center">2</span>
+                <span>Player Account Info</span>
+            </h2>
+            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                <label class="block text-sm font-semibold text-slate-300 mb-2">Player / User ID</label>
+                <input type="text" id="player-id" placeholder="Enter your User/Player ID" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-cyan-500">
+            </div>
+        </section>
+
+        <!-- Step 3: Packages -->
+        <section class="space-y-4">
+            <h2 class="text-lg font-bold text-cyan-400 uppercase tracking-wide flex items-center space-x-2">
+                <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-xs flex items-center justify-center">3</span>
+                <span>Select Package</span>
+            </h2>
+            <div id="packages-container" class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                <div class="col-span-full text-center text-slate-500 py-8 bg-slate-800/50 rounded-xl border border-dashed border-slate-700">
+                    Please select a game first
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 4: Payment Details -->
+        <section class="space-y-4">
+            <h2 class="text-lg font-bold text-cyan-400 uppercase tracking-wide flex items-center space-x-2">
+                <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-xs flex items-center justify-center">4</span>
+                <span>Bank Transfer Details</span>
+            </h2>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 flex justify-between items-center">
+                    <div>
+                        <p class="text-xs text-slate-400 uppercase font-bold">SmartCash</p>
+                        <p class="text-lg font-mono font-bold text-cyan-300">9048641612</p>
+                        <p class="text-xs text-slate-400">J4X SHOPS</p>
+                    </div>
+                    <button onclick="copyToClipboard('9048641612')" class="bg-slate-700 hover:bg-slate-600 p-2 rounded-lg text-xs font-semibold">Copy</button>
+                </div>
+                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 flex justify-between items-center">
+                    <div>
+                        <p class="text-xs text-slate-400 uppercase font-bold">MoMo PSB</p>
+                        <p class="text-lg font-mono font-bold text-orange-300">9130416437</p>
+                        <p class="text-xs text-slate-400">J4X SHOPS</p>
+                    </div>
+                    <button onclick="copyToClipboard('9130416437')" class="bg-slate-700 hover:bg-slate-600 p-2 rounded-lg text-xs font-semibold">Copy</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 5: Confirm -->
+        <section class="bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-4">
+            <h3 class="text-xl font-bold">Complete Order</h3>
+            <input type="text" id="sender-name" placeholder="Your Bank Account Name (for payment tracking)" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-cyan-500">
+            <button onclick="submitOrder()" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-4 rounded-xl text-lg transition shadow-lg shadow-cyan-500/20">
+                Confirm & Send Order via WhatsApp
+            </button>
+        </section>
+    </main>
+
+    <script>
+        const phone = "2349053934805";
+        let currentGame = "";
+        let selectedPkg = null;
+
+        const packages = {
+            codm: [
+                { name: "80 CP", price: "₦1,200" },
+                { name: "420 CP", price: "₦4,800" },
+                { name: "880 CP", price: "₦9,500" },
+                { name: "2400 CP", price: "₦23,500" },
+                { name: "5000 CP", price: "₦45,000" }
+            ],
+            ff: [
+                { name: "100 Diamonds", price: "₦1,100" },
+                { name: "310 Diamonds", price: "₦3,200" },
+                { name: "520 Diamonds", price: "₦5,300" },
+                { name: "1060 Diamonds", price: "₦10,500" },
+                { name: "2180 Diamonds", price: "₦21,000" }
+            ],
+            efootball: [
+                { name: "130 Coins", price: "₦1,500" },
+                { name: "550 Coins", price: "₦5,800" },
+                { name: "1040 Coins", price: "₦11,000" },
+                { name: "2130 Coins", price: "₦21,500" },
+                { name: "3250 Coins", price: "₦32,000" }
+            ]
+        };
+
+        function selectGame(game) {
+            currentGame = game;
+            selectedPkg = null;
+            
+            document.querySelectorAll('.game-btn').forEach(b => b.classList.remove('border-cyan-500', 'border-orange-500', 'border-blue-500'));
+            
+            const btn = document.getElementById(`btn-${game}`);
+            if(game === 'codm') btn.classList.add('border-cyan-500');
+            if(game === 'ff') btn.classList.add('border-orange-500');
+            if(game === 'efootball') btn.classList.add('border-blue-500');
+
+            const container = document.getElementById('packages-container');
+            container.innerHTML = packages[game].map((pkg, idx) => `
+                <div onclick="selectPackage(${idx})" id="pkg-${idx}" class="pkg-card bg-slate-800 border border-slate-700 hover:border-cyan-500 p-4 rounded-xl cursor-pointer text-center transition">
+                    <p class="font-bold text-lg">${pkg.name}</p>
+                    <p class="text-cyan-400 font-semibold mt-1">${pkg.price}</p>
+                </div>
+            `).join('');
+        }
+
+        function selectPackage(idx) {
+            selectedPkg = packages[currentGame][idx];
+            document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('border-cyan-500', 'bg-slate-700'));
+            document.getElementById(`pkg-${idx}`).classList.add('border-cyan-500', 'bg-slate-700');
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text);
+            alert("Account number copied: " + text);
+        }
+
+        function submitOrder() {
+            const playerId = document.getElementById('player-id').value;
+            const senderName = document.getElementById('sender-name').value;
+
+            if (!currentGame || !selectedPkg || !playerId || !senderName) {
+                alert("Please fill in all details (Game, Player ID, Package, and Sender Name).");
+                return;
+            }
+
+            const message = `Hello J4X SHOPS! I made a top up request:%0A%0A- Game: ${currentGame.toUpperCase()}%0A- Package: ${selectedPkg.name} (${selectedPkg.price})%0A- Player ID: ${playerId}%0A- Sender Account Name: ${senderName}`;
+            window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+        }
+    </script>
+</body>
+</html>
