@@ -1,7 +1,7 @@
 {
   "name": "j4x-shops",
   "version": "1.0.0",
-  "description": "J4X SHOPS Game Top Up Store",
+  "description": "J4X SHOPS Top Up Website",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
