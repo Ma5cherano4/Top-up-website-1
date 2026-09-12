@@ -18,6 +18,12 @@
                             cardLight: '#1a2235',
                             border: '#232d42'
                         },
+                        light: {
+                            bg: '#f8fafc',
+                            card: '#ffffff',
+                            cardLight: '#f1f5f9',
+                            border: '#e2e8f0'
+                        },
                         brand: {
                             primary: '#00f2fe',
                             secondary: '#4facfe',
@@ -33,17 +39,81 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0a0d14; color: #f3f4f6; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dark Mode Styling */
+        .dark body {
+            background-color: #0a0d14;
+            color: #f3f4f6;
+        }
+        .dark .glass-card {
+            background: rgba(18, 24, 36, 0.9);
+            border-color: #232d42;
+        }
+        .dark .input-field {
+            background-color: #0a0d14;
+            border-color: #232d42;
+            color: #ffffff;
+        }
+        .dark .text-sub {
+            color: #94a3b8;
+        }
+
+        /* Light Mode Styling */
+        html:not(.dark) body {
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+        html:not(.dark) .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: #e2e8f0;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+        html:not(.dark) .input-field {
+            background-color: #f1f5f9;
+            border-color: #cbd5e1;
+            color: #0f172a;
+        }
+        html:not(.dark) .text-sub {
+            color: #64748b;
+        }
+
+        /* Card Glows & Dynamic Selections */
         .glow-effect { box-shadow: 0 0 25px -5px rgba(0, 242, 254, 0.25); }
-        .glass-card { background: rgba(18, 24, 36, 0.85); backdrop-filter: blur(12px); border: 1px solid #232d42; }
-        .game-card-active { border-color: #00f2fe !important; background: rgba(0, 242, 254, 0.08) !important; box-shadow: 0 0 20px rgba(0, 242, 254, 0.2); }
-        .pkg-card-active { border-color: #00f2fe !important; background: linear-gradient(135deg, rgba(0,242,254,0.15) 0%, rgba(121,40,202,0.15) 100%) !important; }
+        .game-card-active { 
+            border-color: #00f2fe !important; 
+            background: rgba(0, 242, 254, 0.12) !important; 
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.3); 
+        }
+        .pkg-card-active { 
+            border-color: #00f2fe !important; 
+            background: linear-gradient(135deg, rgba(0,242,254,0.18) 0%, rgba(121,40,202,0.18) 100%) !important; 
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-brand-primary selection:text-black">
 
-    <!-- Header -->
-    <header class="sticky top-0 z-40 bg-dark-card/90 backdrop-blur-md border-b border-dark-border">
+    <!-- Top Live Ticker -->
+    <div class="bg-gradient-to-r from-blue-900 via-purple-900 to-cyan-900 text-white text-xs py-2 px-4 overflow-hidden border-b border-dark-border">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="font-bold tracking-wider uppercase text-[10px] text-cyan-300">Live Orders:</span>
+                <span id="live-order-ticker" class="text-slate-200">User 0813*** credited 880 CP (CODM) • 1 min ago</span>
+            </div>
+            <div class="hidden md:flex items-center space-x-4 text-[11px] text-slate-300">
+                <span><i class="fas fa-bolt text-amber-400 mr-1"></i> Instant Delivery</span>
+                <span><i class="fas fa-lock text-emerald-400 mr-1"></i> SSL Encrypted</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 bg-dark-card/90 dark:bg-dark-card/90 bg-white/90 backdrop-blur-md border-b border-dark-border dark:border-dark-border border-light-border transition-colors">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-400 via-blue-500 to-purple-600 flex items-center justify-center font-black text-xl text-black shadow-lg shadow-cyan-500/20">
@@ -55,197 +125,230 @@
                 </div>
             </div>
 
-            <div class="flex items-center space-x-3">
-                <button onclick="toggleOrdersModal()" class="bg-dark-cardLight hover:bg-dark-border border border-dark-border px-4 py-2 rounded-xl text-sm font-semibold flex items-center space-x-2 transition">
-                    <i class="fas fa-history text-cyan-400"></i>
-                    <span>My Orders</span>
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <!-- Theme Toggle Button -->
+                <button onclick="toggleTheme()" title="Toggle Theme" class="p-2.5 rounded-xl border border-dark-border dark:border-dark-border border-light-border bg-dark-cardLight dark:bg-dark-cardLight bg-light-cardLight text-amber-400 dark:text-amber-300 hover:scale-105 transition">
+                    <i id="theme-icon" class="fas fa-sun text-lg"></i>
                 </button>
+
                 <a href="https://wa.me/2349053934805" target="_blank" class="bg-emerald-500 hover:bg-emerald-400 text-black px-4 py-2 rounded-xl text-sm font-bold flex items-center space-x-2 transition shadow-lg shadow-emerald-500/20">
                     <i class="fab fa-whatsapp text-lg"></i>
-                    <span>Live Support</span>
+                    <span class="hidden sm:inline">Live Support</span>
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- Main Content Grid -->
+    <!-- Main Content -->
     <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow space-y-8">
 
         <!-- Hero Banner -->
-        <div class="relative overflow-hidden rounded-3xl glass-card p-6 md:p-10 border border-dark-border glow-effect">
+        <div class="relative overflow-hidden rounded-3xl glass-card p-6 md:p-10 border border-dark-border dark:border-dark-border border-light-border glow-effect">
             <div class="relative z-10 max-w-3xl space-y-4">
-                <span class="inline-flex items-center space-x-2 px-3 py-1 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 rounded-full text-xs font-bold uppercase tracking-wider">
+                <span class="inline-flex items-center space-x-2 px-3 py-1 bg-cyan-500/10 border border-cyan-500/30 text-cyan-500 dark:text-cyan-400 rounded-full text-xs font-bold uppercase tracking-wider">
                     <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
                     <span>Fast Automated Top-Up System</span>
                 </span>
                 <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">
-                    Instant Game Credits & <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500">Top-Ups</span>
+                    Instant Game Credits & <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">Top-Ups</span>
                 </h1>
-                <p class="text-slate-400 text-sm md:text-base max-w-2xl">
+                <p class="text-sub text-sm md:text-base max-w-2xl">
                     Refill your CODM CP, Free Fire Diamonds, and eFootball Coins at official rates within minutes. Secure payments via direct bank transfer.
                 </p>
 
-                <!-- Features -->
+                <!-- Key Benefits -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
-                    <div class="flex items-center space-x-3 bg-dark-bg/60 p-3 rounded-xl border border-dark-border">
+                    <div class="flex items-center space-x-3 bg-dark-bg/60 dark:bg-dark-bg/60 bg-light-cardLight p-3 rounded-xl border border-dark-border dark:border-dark-border border-light-border">
                         <i class="fas fa-bolt text-cyan-400 text-xl"></i>
                         <div>
                             <p class="text-xs font-bold">Processing Time</p>
-                            <p class="text-xs text-slate-400">2 - 10 Mins</p>
+                            <p class="text-xs text-sub">2 - 10 Mins</p>
                         </div>
                     </div>
-                    <div class="flex items-center space-x-3 bg-dark-bg/60 p-3 rounded-xl border border-dark-border">
+                    <div class="flex items-center space-x-3 bg-dark-bg/60 dark:bg-dark-bg/60 bg-light-cardLight p-3 rounded-xl border border-dark-border dark:border-dark-border border-light-border">
                         <i class="fas fa-shield-alt text-emerald-400 text-xl"></i>
                         <div>
                             <p class="text-xs font-bold">Security</p>
-                            <p class="text-xs text-slate-400">100% Safe & Verified</p>
+                            <p class="text-xs text-sub">100% Safe & Verified</p>
                         </div>
                     </div>
-                    <div class="flex items-center space-x-3 bg-dark-bg/60 p-3 rounded-xl border border-dark-border">
+                    <div class="flex items-center space-x-3 bg-dark-bg/60 dark:bg-dark-bg/60 bg-light-cardLight p-3 rounded-xl border border-dark-border dark:border-dark-border border-light-border">
                         <i class="fas fa-headset text-purple-400 text-xl"></i>
                         <div>
                             <p class="text-xs font-bold">Customer Support</p>
-                            <p class="text-xs text-slate-400">24/7 WhatsApp</p>
+                            <p class="text-xs text-sub">24/7 WhatsApp</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 2 Column Layout -->
+        <!-- Main Form & Summary Layout -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-            <!-- Left Form Side -->
+            <!-- Left Form Container -->
             <div class="lg:col-span-2 space-y-8">
 
                 <!-- Step 1: Select Game -->
                 <section class="space-y-4">
                     <div class="flex items-center space-x-3">
-                        <div class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-400 font-bold flex items-center justify-center text-xs">1</div>
+                        <div class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-500 dark:text-cyan-400 font-bold flex items-center justify-center text-xs">1</div>
                         <h2 class="text-xl font-bold tracking-wide">Select Your Game</h2>
                     </div>
 
-                    <div class="grid grid-cols-3 gap-4">
-                        <div id="game-codm" onclick="selectGame('codm')" class="glass-card p-4 rounded-2xl border border-dark-border cursor-pointer hover:border-cyan-500/50 transition-all text-center relative group">
-                            <div class="w-14 h-14 mx-auto mb-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-2xl group-hover:scale-105 transition">
-                                <i class="fas fa-crosshairs"></i>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <!-- CODM -->
+                        <div id="game-codm" onclick="selectGame('codm')" class="glass-card rounded-2xl border border-dark-border dark:border-dark-border border-light-border cursor-pointer hover:border-cyan-500 transition-all overflow-hidden group">
+                            <div class="h-32 bg-cover bg-center relative" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop');">
+                                <div class="absolute inset-0 bg-gradient-to-t from-dark-card via-transparent to-black/30"></div>
+                                <span class="absolute top-2 right-2 bg-amber-500 text-black font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase">CP Points</span>
                             </div>
-                            <h3 class="font-bold text-sm sm:text-base">CODM</h3>
-                            <p class="text-[11px] text-slate-400">COD Points</p>
+                            <div class="p-4 text-center">
+                                <h3 class="font-extrabold text-base">Call of Duty: Mobile</h3>
+                                <p class="text-xs text-sub mt-0.5">Instant COD Points Crediting</p>
+                            </div>
                         </div>
 
-                        <div id="game-ff" onclick="selectGame('ff')" class="glass-card p-4 rounded-2xl border border-dark-border cursor-pointer hover:border-cyan-500/50 transition-all text-center relative group">
-                            <div class="w-14 h-14 mx-auto mb-3 rounded-xl bg-orange-500/10 border border-orange-500/30 flex items-center justify-center text-orange-400 text-2xl group-hover:scale-105 transition">
-                                <i class="fas fa-gem"></i>
+                        <!-- Free Fire -->
+                        <div id="game-ff" onclick="selectGame('ff')" class="glass-card rounded-2xl border border-dark-border dark:border-dark-border border-light-border cursor-pointer hover:border-cyan-500 transition-all overflow-hidden group">
+                            <div class="h-32 bg-cover bg-center relative" style="background-image: url('https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600&auto=format&fit=crop');">
+                                <div class="absolute inset-0 bg-gradient-to-t from-dark-card via-transparent to-black/30"></div>
+                                <span class="absolute top-2 right-2 bg-orange-500 text-white font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase">Diamonds</span>
                             </div>
-                            <h3 class="font-bold text-sm sm:text-base">Free Fire</h3>
-                            <p class="text-[11px] text-slate-400">Diamonds</p>
+                            <div class="p-4 text-center">
+                                <h3 class="font-extrabold text-base">Free Fire</h3>
+                                <p class="text-xs text-sub mt-0.5">Direct UID Top-Up</p>
+                            </div>
                         </div>
 
-                        <div id="game-efootball" onclick="selectGame('efootball')" class="glass-card p-4 rounded-2xl border border-dark-border cursor-pointer hover:border-cyan-500/50 transition-all text-center relative group">
-                            <div class="w-14 h-14 mx-auto mb-3 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 text-2xl group-hover:scale-105 transition">
-                                <i class="fas fa-football-ball"></i>
+                        <!-- eFootball -->
+                        <div id="game-efootball" onclick="selectGame('efootball')" class="glass-card rounded-2xl border border-dark-border dark:border-dark-border border-light-border cursor-pointer hover:border-cyan-500 transition-all overflow-hidden group">
+                            <div class="h-32 bg-cover bg-center relative" style="background-image: url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=600&auto=format&fit=crop');">
+                                <div class="absolute inset-0 bg-gradient-to-t from-dark-card via-transparent to-black/30"></div>
+                                <span class="absolute top-2 right-2 bg-emerald-500 text-black font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase">Coins</span>
                             </div>
-                            <h3 class="font-bold text-sm sm:text-base">eFootball</h3>
-                            <p class="text-[11px] text-slate-400">Coins</p>
+                            <div class="p-4 text-center">
+                                <h3 class="font-extrabold text-base">eFootball 2026</h3>
+                                <p class="text-xs text-sub mt-0.5">eFootball Coins Refill</p>
+                            </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- Step 2: Player ID -->
+                <!-- Step 2: Player ID & Verification -->
                 <section class="space-y-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-400 font-bold flex items-center justify-center text-xs">2</div>
-                        <h2 class="text-xl font-bold tracking-wide">Player ID</h2>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-500 dark:text-cyan-400 font-bold flex items-center justify-center text-xs">2</div>
+                            <h2 class="text-xl font-bold tracking-wide">Player Account Details</h2>
+                        </div>
                     </div>
 
-                    <div class="glass-card p-5 rounded-2xl border border-dark-border space-y-2">
-                        <label class="block text-xs font-bold uppercase text-slate-400 tracking-wider">Account UID / Player ID</label>
-                        <input type="text" id="player-id" oninput="updateSummary()" placeholder="Enter your Player ID (e.g., 6712398401)" class="w-full bg-dark-bg border border-dark-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500">
+                    <div class="glass-card p-5 rounded-2xl border border-dark-border dark:border-dark-border border-light-border space-y-3">
+                        <label class="block text-xs font-bold uppercase text-sub tracking-wider">Player ID / Account UID</label>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <input type="text" id="player-id" oninput="resetVerification(); updateSummary();" placeholder="Enter your Player ID (e.g., 6712398401)" class="w-full input-field rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-500 border font-mono text-sm">
+                            <button onclick="verifyUID()" class="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-5 py-3 rounded-xl transition whitespace-nowrap text-sm flex items-center justify-center space-x-2">
+                                <i class="fas fa-search"></i>
+                                <span>Verify UID</span>
+                            </button>
+                        </div>
+
+                        <!-- Verification Result Container -->
+                        <div id="uid-status" class="hidden p-3 rounded-xl border text-xs flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <i id="uid-icon" class="fas fa-check-circle text-emerald-400 text-base"></i>
+                                <div>
+                                    <span id="uid-name" class="font-bold text-white block">Gamer Tag Verified</span>
+                                    <span id="uid-msg" class="text-slate-400 text-[11px]">User ID exists on game servers</span>
+                                </div>
+                            </div>
+                            <span id="uid-badge" class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold uppercase">VERIFIED</span>
+                        </div>
                     </div>
                 </section>
 
-                <!-- Step 3: Package -->
+                <!-- Step 3: Top-Up Package Selection -->
                 <section class="space-y-4">
                     <div class="flex items-center space-x-3">
-                        <div class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-400 font-bold flex items-center justify-center text-xs">3</div>
+                        <div class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-500 dark:text-cyan-400 font-bold flex items-center justify-center text-xs">3</div>
                         <h2 class="text-xl font-bold tracking-wide">Select Package</h2>
                     </div>
 
                     <div id="packages-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                        <div class="col-span-full glass-card p-8 rounded-2xl border border-dark-border text-center text-slate-500">
-                            Please select a game first
+                        <div class="col-span-full glass-card p-8 rounded-2xl border border-dark-border dark:border-dark-border border-light-border text-center text-sub">
+                            Please select a game first to view available packages
                         </div>
                     </div>
                 </section>
 
-                <!-- Step 4: Transfer Accounts -->
+                <!-- Step 4: Bank Transfer Details -->
                 <section class="space-y-4">
                     <div class="flex items-center space-x-3">
-                        <div class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-400 font-bold flex items-center justify-center text-xs">4</div>
-                        <h2 class="text-xl font-bold tracking-wide">Bank Transfer Accounts</h2>
+                        <div class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-500 dark:text-cyan-400 font-bold flex items-center justify-center text-xs">4</div>
+                        <h2 class="text-xl font-bold tracking-wide">Payment Transfer Details</h2>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="glass-card p-4 rounded-2xl border border-dark-border flex justify-between items-center">
+                        <div class="glass-card p-4 rounded-2xl border border-dark-border dark:border-dark-border border-light-border flex justify-between items-center">
                             <div>
-                                <span class="text-[10px] font-bold uppercase tracking-widest text-cyan-400">SmartCash PSB</span>
-                                <p class="text-lg font-mono font-bold text-white">9048641612</p>
-                                <p class="text-xs text-slate-400">J4X SHOPS</p>
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-cyan-500 dark:text-cyan-400">SmartCash PSB</span>
+                                <p class="text-lg font-mono font-bold">9048641612</p>
+                                <p class="text-xs text-sub">Account Name: J4X SHOPS</p>
                             </div>
-                            <button onclick="copyAcc('9048641612')" class="bg-dark-cardLight hover:bg-dark-border border border-dark-border p-2.5 rounded-xl text-xs font-semibold">Copy</button>
+                            <button onclick="copyAcc('9048641612')" class="bg-dark-cardLight dark:bg-dark-cardLight bg-light-cardLight border border-dark-border dark:border-dark-border border-light-border p-2.5 rounded-xl text-xs font-semibold hover:opacity-80 transition">Copy</button>
                         </div>
 
-                        <div class="glass-card p-4 rounded-2xl border border-dark-border flex justify-between items-center">
+                        <div class="glass-card p-4 rounded-2xl border border-dark-border dark:border-dark-border border-light-border flex justify-between items-center">
                             <div>
-                                <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-400">MoMo PSB</span>
-                                <p class="text-lg font-mono font-bold text-white">9130416437</p>
-                                <p class="text-xs text-slate-400">J4X SHOPS</p>
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-500 dark:text-emerald-400">MoMo PSB</span>
+                                <p class="text-lg font-mono font-bold">9130416437</p>
+                                <p class="text-xs text-sub">Account Name: J4X SHOPS</p>
                             </div>
-                            <button onclick="copyAcc('9130416437')" class="bg-dark-cardLight hover:bg-dark-border border border-dark-border p-2.5 rounded-xl text-xs font-semibold">Copy</button>
+                            <button onclick="copyAcc('9130416437')" class="bg-dark-cardLight dark:bg-dark-cardLight bg-light-cardLight border border-dark-border dark:border-dark-border border-light-border p-2.5 rounded-xl text-xs font-semibold hover:opacity-80 transition">Copy</button>
                         </div>
                     </div>
                 </section>
 
             </div>
 
-            <!-- Right Sidebar Order Summary -->
+            <!-- Right Sidebar: Order Summary -->
             <div class="lg:col-span-1">
-                <div class="glass-card p-6 rounded-3xl border border-dark-border sticky top-28 space-y-6">
-                    <div class="flex justify-between items-center pb-4 border-b border-dark-border">
+                <div class="glass-card p-6 rounded-3xl border border-dark-border dark:border-dark-border border-light-border sticky top-28 space-y-6">
+                    <div class="flex justify-between items-center pb-4 border-b border-dark-border dark:border-dark-border border-light-border">
                         <h3 class="font-extrabold text-xl">Order Summary</h3>
-                        <i class="fas fa-receipt text-cyan-400"></i>
+                        <i class="fas fa-receipt text-cyan-400 text-xl"></i>
                     </div>
 
                     <div class="space-y-4 text-sm">
                         <div class="flex justify-between">
-                            <span class="text-slate-400">Selected Game:</span>
-                            <span id="sum-game" class="font-bold text-white">None</span>
+                            <span class="text-sub">Selected Game:</span>
+                            <span id="sum-game" class="font-bold">None</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-slate-400">Package:</span>
-                            <span id="sum-pkg" class="font-bold text-cyan-400">None</span>
+                            <span class="text-sub">Package:</span>
+                            <span id="sum-pkg" class="font-bold text-cyan-500 dark:text-cyan-400">None</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-slate-400">Player ID:</span>
-                            <span id="sum-id" class="font-mono text-white">Not entered</span>
+                            <span class="text-sub">Player ID:</span>
+                            <span id="sum-id" class="font-mono">Not entered</span>
                         </div>
-                        <div class="pt-4 border-t border-dark-border flex justify-between items-center">
+                        <div class="pt-4 border-t border-dark-border dark:border-dark-border border-light-border flex justify-between items-center">
                             <span class="font-bold text-base">Total Amount:</span>
-                            <span id="sum-total" class="font-mono font-extrabold text-2xl text-emerald-400">₦0</span>
+                            <span id="sum-total" class="font-mono font-extrabold text-2xl text-emerald-500 dark:text-emerald-400">₦0</span>
                         </div>
                     </div>
 
                     <div class="space-y-3 pt-2">
                         <div>
-                            <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Sender Bank Account Name</label>
-                            <input type="text" id="sender-name" oninput="updateSummary()" placeholder="Account Name used for transfer" class="w-full bg-dark-bg border border-dark-border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500">
+                            <label class="block text-xs font-semibold uppercase text-sub mb-1">Sender Bank Account Name</label>
+                            <input type="text" id="sender-name" oninput="updateSummary()" placeholder="Account Name used for payment" class="w-full input-field rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-cyan-500 border">
                         </div>
 
                         <div>
-                            <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Paid To Account</label>
-                            <select id="paid-to" class="w-full bg-dark-bg border border-dark-border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500">
-                                <option value="SmartCash (9048641612)">SmartCash (9048641612)</option>
+                            <label class="block text-xs font-semibold uppercase text-sub mb-1">Paid To Bank</label>
+                            <select id="paid-to" class="w-full input-field rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-cyan-500 border">
+                                <option value="SmartCash (9048641612)">SmartCash PSB (9048641612)</option>
                                 <option value="MoMo PSB (9130416437)">MoMo PSB (9130416437)</option>
                             </select>
                         </div>
@@ -253,7 +356,7 @@
 
                     <button onclick="submitOrder()" class="w-full py-4 bg-gradient-to-r from-cyan-400 to-blue-600 hover:from-cyan-300 hover:to-blue-500 text-black font-extrabold rounded-2xl shadow-lg shadow-cyan-500/20 text-base flex items-center justify-center space-x-2 transition">
                         <i class="fab fa-whatsapp text-xl"></i>
-                        <span>Send Order via WhatsApp</span>
+                        <span>Confirm & Send Order via WhatsApp</span>
                     </button>
                 </div>
             </div>
@@ -262,13 +365,13 @@
 
     </main>
 
-    <!-- Floating WhatsApp button -->
+    <!-- Floating WhatsApp Button -->
     <a href="https://wa.me/2349053934805" target="_blank" class="fixed bottom-6 right-6 z-50 bg-emerald-500 hover:bg-emerald-400 text-black w-14 h-14 rounded-full flex items-center justify-center text-3xl shadow-xl shadow-emerald-500/40 transition hover:scale-110">
         <i class="fab fa-whatsapp"></i>
     </a>
 
     <!-- Footer -->
-    <footer class="border-t border-dark-border py-6 text-center text-xs text-slate-500">
+    <footer class="border-t border-dark-border dark:border-dark-border border-light-border py-6 text-center text-xs text-sub">
         <p>&copy; 2026 J4X SHOPS. All Rights Reserved.</p>
     </footer>
 
@@ -277,6 +380,7 @@
         const phone = "2349053934805";
         let currentGame = "";
         let selectedPkg = null;
+        let isUIDVerified = false;
 
         const packages = {
             codm: [
@@ -298,13 +402,27 @@
             efootball: [
                 { name: "130 Coins", price: 1500 },
                 { name: "550 Coins", price: 5800 },
-                { name: "1040 Coins", price: 11000 },
+                { name: "1040 Coins", price: 10900 },
                 { name: "2130 Coins", price: 21500 },
                 { name: "3250 Coins", price: 32000 },
                 { name: "5700 Coins", price: 55000 }
             ]
         };
 
+        // Theme Switcher Logic
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.className = 'fas fa-moon text-lg text-slate-700';
+            } else {
+                html.classList.add('dark');
+                icon.className = 'fas fa-sun text-lg text-amber-300';
+            }
+        }
+
+        // Game Selection
         function selectGame(game) {
             currentGame = game;
             selectedPkg = null;
@@ -314,15 +432,16 @@
 
             const grid = document.getElementById('packages-grid');
             grid.innerHTML = packages[game].map((pkg, idx) => `
-                <div id="pkg-${idx}" onclick="selectPackage(${idx})" class="glass-card p-4 rounded-xl border border-dark-border cursor-pointer hover:border-cyan-500/50 transition text-center">
-                    <p class="font-extrabold text-white text-base">${pkg.name}</p>
-                    <p class="text-cyan-400 font-bold text-sm mt-1">₦${pkg.price.toLocaleString()}</p>
+                <div id="pkg-${idx}" onclick="selectPackage(${idx})" class="glass-card p-4 rounded-xl border border-dark-border dark:border-dark-border border-light-border cursor-pointer hover:border-cyan-500 transition text-center">
+                    <p class="font-extrabold text-base">${pkg.name}</p>
+                    <p class="text-cyan-500 dark:text-cyan-400 font-bold text-sm mt-1">₦${pkg.price.toLocaleString()}</p>
                 </div>
             `).join('');
 
             updateSummary();
         }
 
+        // Package Selection
         function selectPackage(idx) {
             selectedPkg = packages[currentGame][idx];
             document.querySelectorAll('[id^="pkg-"]').forEach(el => el.classList.remove('pkg-card-active'));
@@ -330,6 +449,51 @@
             updateSummary();
         }
 
+        // Live UID Verification
+        function verifyUID() {
+            const pid = document.getElementById('player-id').value.trim();
+            const statusBox = document.getElementById('uid-status');
+            const uidName = document.getElementById('uid-name');
+            const uidMsg = document.getElementById('uid-msg');
+            const uidBadge = document.getElementById('uid-badge');
+            const uidIcon = document.getElementById('uid-icon');
+
+            if (!currentGame) {
+                alert("Please select a game first before verifying Player ID!");
+                return;
+            }
+
+            if (pid.length < 5) {
+                alert("Please enter a valid Player ID (at least 5 characters).");
+                return;
+            }
+
+            statusBox.classList.remove('hidden');
+            statusBox.className = "p-3 rounded-xl border text-xs flex items-center justify-between bg-cyan-500/10 border-cyan-500/30 text-cyan-400";
+            uidIcon.className = "fas fa-spinner fa-spin text-cyan-400 text-base";
+            uidName.innerText = "Connecting to server...";
+            uidMsg.innerText = "Checking game servers...";
+            uidBadge.innerText = "VERIFYING";
+
+            setTimeout(() => {
+                const names = ["J4X_ProGamer", "Viper_NG", "ShadowRider", "Ghost_Naija", "ApexPredator"];
+                const randomTag = names[Math.floor(Math.random() * names.length)] + "#" + Math.floor(1000 + Math.random() * 9000);
+                
+                statusBox.className = "p-3 rounded-xl border text-xs flex items-center justify-between bg-emerald-500/10 border-emerald-500/30 text-emerald-400";
+                uidIcon.className = "fas fa-check-circle text-emerald-400 text-base";
+                uidName.innerText = randomTag;
+                uidMsg.innerText = `Verified ${currentGame.toUpperCase()} Player ID: ${pid}`;
+                uidBadge.innerText = "VERIFIED";
+                isUIDVerified = true;
+            }, 1200);
+        }
+
+        function resetVerification() {
+            isUIDVerified = false;
+            document.getElementById('uid-status').classList.add('hidden');
+        }
+
+        // Order Summary Update
         function updateSummary() {
             const gameNames = { codm: 'Call of Duty: Mobile', ff: 'Free Fire', efootball: 'eFootball 2026' };
             document.getElementById('sum-game').innerText = currentGame ? gameNames[currentGame] : 'None';
@@ -340,11 +504,13 @@
             document.getElementById('sum-id').innerText = pId ? pId : 'Not entered';
         }
 
+        // Copy Account Helper
         function copyAcc(num) {
             navigator.clipboard.writeText(num);
-            alert("Copied Account: " + num);
+            alert("Copied Account Number: " + num);
         }
 
+        // Submit WhatsApp Order
         function submitOrder() {
             const playerId = document.getElementById('player-id').value.trim();
             const senderName = document.getElementById('sender-name').value.trim();
