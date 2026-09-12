@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Serve static UI assets directly from root directory
+// Serve static assets from root directory
 app.use(express.static(__dirname));
 
 const PORT = process.env.PORT || 3000;
@@ -17,12 +17,12 @@ app.get('/api/health', (req, res) => {
     res.status(200).json({ status: 'OK', site: 'J4X SHOPS' });
 });
 
-// Explicit root route serving index.html
+// Serve index.html for main page
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Wildcard fallback route
+// Fallback
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
