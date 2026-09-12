@@ -96,7 +96,7 @@
     <!-- Main Container -->
     <main class="max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-10 flex-grow space-y-8">
 
-        <!-- Hero Section -->
+        <!-- Hero Banner -->
         <div class="relative overflow-hidden rounded-3xl glass-panel p-6 sm:p-10 border border-slate-800 shadow-neon-cyan">
             <div class="absolute -right-20 -top-20 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -left-20 -bottom-20 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -121,7 +121,7 @@
             <!-- Left Controls Column -->
             <div class="lg:col-span-2 space-y-8">
 
-                <!-- Step 1: Game Selection -->
+                <!-- Step 1: Game Selection (Pure CSS Art Cards) -->
                 <section class="space-y-4">
                     <div class="flex items-center space-x-3">
                         <div class="w-8 h-8 rounded-xl bg-cyan-500/20 text-cyan-400 font-extrabold flex items-center justify-center text-sm border border-cyan-500/30">1</div>
@@ -130,45 +130,51 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <!-- CODM Card -->
-                        <div id="game-codm" onclick="selectGame('codm')" class="glass-panel rounded-2xl border border-slate-800 cursor-pointer hover:border-cyan-500/50 transition-all duration-300 overflow-hidden active:scale-98 group">
-                            <div class="h-44 bg-slate-900 relative overflow-hidden">
-                                <img src="https://upload.wikimedia.org/wikipedia/en/1/19/Call_of_Duty_Mobile_cover_art.jpg" 
-                                     alt="Call of Duty Mobile Poster" 
-                                     class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
-                                <div class="absolute inset-0 bg-gradient-to-t from-brand-card via-transparent to-transparent"></div>
+                        <div id="game-codm" onclick="selectGame('codm')" class="glass-panel rounded-2xl border border-slate-800 cursor-pointer hover:border-amber-400/50 transition-all duration-300 overflow-hidden active:scale-98 group">
+                            <div class="h-40 bg-gradient-to-tr from-amber-950 via-slate-900 to-slate-950 relative flex items-center justify-center p-4">
+                                <div class="text-center space-y-2">
+                                    <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-2xl group-hover:scale-110 transition-transform">
+                                        <i class="fas fa-crosshair"></i>
+                                    </div>
+                                    <span class="block text-xs font-black tracking-widest text-amber-400 uppercase">COD: MOBILE</span>
+                                </div>
                                 <span class="absolute top-3 right-3 bg-amber-400 text-black font-black text-[10px] px-2.5 py-1 rounded-lg uppercase tracking-wider shadow">CP Points</span>
                             </div>
-                            <div class="p-4 text-center">
+                            <div class="p-4 text-center border-t border-slate-800/80">
                                 <h3 class="font-extrabold text-base text-white">Call of Duty: Mobile</h3>
                                 <p class="text-xs text-slate-400 mt-1">Instant CP Delivery</p>
                             </div>
                         </div>
 
                         <!-- Free Fire Card -->
-                        <div id="game-ff" onclick="selectGame('ff')" class="glass-panel rounded-2xl border border-slate-800 cursor-pointer hover:border-cyan-500/50 transition-all duration-300 overflow-hidden active:scale-98 group">
-                            <div class="h-44 bg-slate-900 relative overflow-hidden">
-                                <img src="https://upload.wikimedia.org/wikipedia/en/a/a2/Garena_Free_Fire_cover_art.jpg" 
-                                     alt="Free Fire Poster" 
-                                     class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
-                                <div class="absolute inset-0 bg-gradient-to-t from-brand-card via-transparent to-transparent"></div>
+                        <div id="game-ff" onclick="selectGame('ff')" class="glass-panel rounded-2xl border border-slate-800 cursor-pointer hover:border-orange-500/50 transition-all duration-300 overflow-hidden active:scale-98 group">
+                            <div class="h-40 bg-gradient-to-tr from-orange-950 via-slate-900 to-slate-950 relative flex items-center justify-center p-4">
+                                <div class="text-center space-y-2">
+                                    <div class="w-14 h-14 mx-auto rounded-2xl bg-orange-500/10 border border-orange-500/30 flex items-center justify-center text-orange-400 text-2xl group-hover:scale-110 transition-transform">
+                                        <i class="fas fa-fire"></i>
+                                    </div>
+                                    <span class="block text-xs font-black tracking-widest text-orange-400 uppercase">GARENA FF</span>
+                                </div>
                                 <span class="absolute top-3 right-3 bg-orange-500 text-white font-black text-[10px] px-2.5 py-1 rounded-lg uppercase tracking-wider shadow">Diamonds</span>
                             </div>
-                            <div class="p-4 text-center">
+                            <div class="p-4 text-center border-t border-slate-800/80">
                                 <h3 class="font-extrabold text-base text-white">Free Fire</h3>
                                 <p class="text-xs text-slate-400 mt-1">Direct Player UID</p>
                             </div>
                         </div>
 
                         <!-- eFootball Card -->
-                        <div id="game-efootball" onclick="selectGame('efootball')" class="glass-panel rounded-2xl border border-slate-800 cursor-pointer hover:border-cyan-500/50 transition-all duration-300 overflow-hidden active:scale-98 group">
-                            <div class="h-44 bg-slate-900 relative overflow-hidden">
-                                <img src="https://upload.wikimedia.org/wikipedia/en/d/db/EFootball_2022_cover.jpeg" 
-                                     alt="eFootball Poster" 
-                                     class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
-                                <div class="absolute inset-0 bg-gradient-to-t from-brand-card via-transparent to-transparent"></div>
+                        <div id="game-efootball" onclick="selectGame('efootball')" class="glass-panel rounded-2xl border border-slate-800 cursor-pointer hover:border-emerald-400/50 transition-all duration-300 overflow-hidden active:scale-98 group">
+                            <div class="h-40 bg-gradient-to-tr from-emerald-950 via-slate-900 to-slate-950 relative flex items-center justify-center p-4">
+                                <div class="text-center space-y-2">
+                                    <div class="w-14 h-14 mx-auto rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-2xl group-hover:scale-110 transition-transform">
+                                        <i class="fas fa-futbol"></i>
+                                    </div>
+                                    <span class="block text-xs font-black tracking-widest text-emerald-400 uppercase">eFOOTBALL</span>
+                                </div>
                                 <span class="absolute top-3 right-3 bg-emerald-400 text-black font-black text-[10px] px-2.5 py-1 rounded-lg uppercase tracking-wider shadow">Coins</span>
                             </div>
-                            <div class="p-4 text-center">
+                            <div class="p-4 text-center border-t border-slate-800/80">
                                 <h3 class="font-extrabold text-base text-white">eFootball 2026</h3>
                                 <p class="text-xs text-slate-400 mt-1">eFootball Coins</p>
                             </div>
