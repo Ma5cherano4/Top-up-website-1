@@ -7,10 +7,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Serve static assets directly from root directory
+// Serve static UI assets directly from root directory
 app.use(express.static(__dirname));
 
-// Render dynamic port or fallback to 3000
 const PORT = process.env.PORT || 3000;
 
 // API Health Check
@@ -23,7 +22,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Wildcard fallback
+// Wildcard fallback route
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
